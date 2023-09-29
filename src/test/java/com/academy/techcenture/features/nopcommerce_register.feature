@@ -23,3 +23,4 @@ Feature: NopCommerce Register Feature
     When user clicks on the login button
     Then user is on the homepage
     And user can see my account link
+    And user can logout

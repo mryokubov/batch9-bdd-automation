@@ -41,8 +41,21 @@ public class LoginPage extends HomePage {
         passwordInput.sendKeys(password);
     }
 
-    
 
+    public void checkRememberMe(boolean check){
+        if (check){
+            if (!rememberMeCheckBox.isSelected()){
+                rememberMeCheckBox.click();
+            }
+        }else{
+            if (rememberMeCheckBox.isSelected()){
+                rememberMeCheckBox.click();
+            }
+        }
+    }
 
+    public void clickLoginBtn(){
+        loginBtn.click();
+    }
 }
 

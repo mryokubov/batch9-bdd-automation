@@ -8,6 +8,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
@@ -68,7 +69,9 @@ public class NopCommerceRegisterStepDefinitions {
     }
     @Then("user enters {string} in email input")
     public void user_enters_in_email_input(String email) {
-       registerPage.enterEmail(email);
+        int indexOfAt = email.indexOf("@");
+        this.username = email.substring(0 , indexOfAt) + randomUserId + email.substring(indexOfAt);
+        registerPage.enterEmail(username);
     }
     @Then("user enters {string} in company name input")
     public void user_enters_in_company_name_input(String companyName) {
@@ -84,7 +87,8 @@ public class NopCommerceRegisterStepDefinitions {
     }
     @Then("user enters {string} in password input")
     public void user_enters_in_password_input(String password) {
-       registerPage.enterPassword(password);
+        this.password = password;
+       registerPage.enterPassword(this.password);
     }
     @Then("user confirms {string} in confirm password input")
     public void user_confirms_in_confirm_password_input(String password) {
@@ -113,25 +117,32 @@ public class NopCommerceRegisterStepDefinitions {
     }
     @Then("user enters valid username and password as login credentials")
     public void user_enters_valid_username_and_password_as_login_credentials() {
-
-
+        loginPage.enterEmail(this.username);
+        loginPage.enterPassword(this.password);
     }
 
     @And("user selects {string} on remember me radio box")
-    public void userSelectsOnRememberMeRadioBox(String arg0) {
+    public void userSelectsOnRememberMeRadioBox(String check) {
+        boolean shouldCheck = false;
+        if (check.equals("check")){
+            shouldCheck = true;
+        }
+        loginPage.checkRememberMe(shouldCheck);
     }
 
     @When("user clicks on the login button")
     public void user_clicks_on_the_login_button() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        loginPage.clickLoginBtn();
     }
     @Then("user can see my account link")
     public void user_can_see_my_account_link() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+       homePage.verifyMyAccountLink();
     }
 
+    @And("user can logout")
+    public void userCanLogout() {
+        homePage.clickLogoutLink();
+    }
 
 
     @After
@@ -141,7 +152,5 @@ public class NopCommerceRegisterStepDefinitions {
             driver = null;
         }
     }
-
-
 
 }
