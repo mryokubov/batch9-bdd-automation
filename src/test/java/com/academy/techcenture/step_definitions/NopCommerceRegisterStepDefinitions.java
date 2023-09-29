@@ -6,30 +6,17 @@ import com.academy.techcenture.pages.HomePage;
 import com.academy.techcenture.pages.LoginPage;
 import com.academy.techcenture.pages.RegisterPage;
 import com.academy.techcenture.utils.CommonUtils;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
-import org.openqa.selenium.WebDriver;
 
 public class NopCommerceRegisterStepDefinitions {
 
-    private static WebDriver driver;
-    private int randomUserId = CommonUtils.generateId();
+    private int randomUserId = CommonUtils.generateId(); //4534534
     private String username;
     private String password;
 
-    private HomePage homePage;
-    private RegisterPage registerPage;
-    private LoginPage loginPage;
-
-    @Before
-    public void beforeScenario(){
-        driver = Driver.getDriver();
-        driver.get(ConfigReader.getProperty("url"));
-        homePage = new HomePage(driver);
-        registerPage = new RegisterPage(driver);
-        loginPage = new LoginPage(driver);
-    }
+    private HomePage homePage = new HomePage(Driver.getDriver());
+    private RegisterPage registerPage = new RegisterPage(Driver.getDriver());
+    private LoginPage loginPage = new LoginPage(Driver.getDriver());
 
 
     @Given("user is on the homepage")
@@ -135,12 +122,6 @@ public class NopCommerceRegisterStepDefinitions {
     @And("user can logout")
     public void userCanLogout() {
         homePage.clickLogoutLink();
-    }
-
-    @After
-    public void afterScenario(){
-       Driver.quitDriver();
-       driver = null;
     }
 
 }
