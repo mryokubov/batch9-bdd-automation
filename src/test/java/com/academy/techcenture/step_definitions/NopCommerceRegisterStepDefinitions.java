@@ -1,16 +1,15 @@
 package com.academy.techcenture.step_definitions;
 
+import com.academy.techcenture.pages.HomePage;
+import com.academy.techcenture.pages.LoginPage;
+import com.academy.techcenture.pages.RegisterPage;
 import com.academy.techcenture.utils.CommonUtils;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 import java.time.Duration;
 
 public class NopCommerceRegisterStepDefinitions {
@@ -20,7 +19,10 @@ public class NopCommerceRegisterStepDefinitions {
     private String username;
     private String password;
 
-    //this method will execute before the scenario begins
+    private HomePage homePage;
+    private RegisterPage registerPage;
+    private LoginPage loginPage;
+
     @Before
     public void beforeScenario(){
         WebDriverManager.chromedriver().setup();
@@ -29,9 +31,109 @@ public class NopCommerceRegisterStepDefinitions {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
         driver.get("https://demo.nopcommerce.com/");
+
+        homePage = new HomePage(driver);
+        registerPage = new RegisterPage(driver);
+        loginPage = new LoginPage(driver);
     }
 
-    //this method will execute before the scenario begins
+
+    @Given("user is on the homepage")
+    public void user_is_on_the_homepage() {
+        homePage.verifyPageTitle();
+    }
+    @When("user clicks on register link on top")
+    public void user_clicks_on_register_link_on_top() {
+        homePage.clickRegisterLink();
+    }
+    @Then("user should be navigated to register page")
+    public void user_should_be_navigated_to_register_page() {
+       registerPage.verifyPageTitle();
+    }
+    @Then("user selects gender {string}")
+    public void user_selects_gender(String gender) {
+        registerPage.selectGender(gender);
+    }
+    @Then("user enters {string} in firstname input")
+    public void user_enters_in_firstname_input(String firstname) {
+        registerPage.enterFirstName(firstname);
+    }
+    @Then("user enters {string} in lastname input")
+    public void user_enters_in_lastname_input(String lastname) {
+        registerPage.enterLastName(lastname);
+    }
+    @Then("user selects {string} for day, {string} for month and {string} for year")
+    public void user_selects_for_day_for_month_and_for_year(String day, String month, String year) {
+       registerPage.enterDob(day, month, year);
+    }
+    @Then("user enters {string} in email input")
+    public void user_enters_in_email_input(String email) {
+       registerPage.enterEmail(email);
+    }
+    @Then("user enters {string} in company name input")
+    public void user_enters_in_company_name_input(String companyName) {
+        registerPage.enterCompanyName(companyName);
+    }
+    @Then("user selects {string} on newsletter radio box")
+    public void user_selects_on_newsletter_radio_box(String check) {
+        boolean shouldCheck = false;
+        if (check.equals("check")){
+            shouldCheck = true;
+        }
+        registerPage.checkNewsLetter(shouldCheck);
+    }
+    @Then("user enters {string} in password input")
+    public void user_enters_in_password_input(String password) {
+       registerPage.enterPassword(password);
+    }
+    @Then("user confirms {string} in confirm password input")
+    public void user_confirms_in_confirm_password_input(String password) {
+       registerPage.enterPasswordConfirm(password);
+    }
+    @When("user clicks on register button")
+    public void user_clicks_on_register_button() {
+       registerPage.clickRegisterBtn();
+    }
+    @Then("user should see {string} success message")
+    public void user_should_see_success_message(String registerSuccessMsg) {
+        registerPage.verifyRegisterSuccess(registerSuccessMsg);
+    }
+    @When("user clicks on continue button")
+    public void user_clicks_on_continue_button() {
+       registerPage.clickContinueBtn();
+    }
+
+    @When("user clicks on login link")
+    public void user_clicks_on_login_link() {
+        homePage.clickLoginLink();
+    }
+    @Then("user is on the login page")
+    public void user_is_on_the_login_page() {
+        loginPage.verifyPageTitle();
+    }
+    @Then("user enters valid username and password as login credentials")
+    public void user_enters_valid_username_and_password_as_login_credentials() {
+
+
+    }
+
+    @And("user selects {string} on remember me radio box")
+    public void userSelectsOnRememberMeRadioBox(String arg0) {
+    }
+
+    @When("user clicks on the login button")
+    public void user_clicks_on_the_login_button() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Then("user can see my account link")
+    public void user_can_see_my_account_link() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+
+
     @After
     public void afterScenario(){
         if (driver != null){
@@ -40,105 +142,6 @@ public class NopCommerceRegisterStepDefinitions {
         }
     }
 
-    @Given("user is on the homepage")
-    public void user_is_on_the_homepage() {
-        String homePageTitle = driver.getTitle();
-        Assert.assertTrue("Home page title is not correct", homePageTitle.equals("nopCommerce demo store"));
-    }
-    @When("user clicks on register link on top")
-    public void user_clicks_on_register_link_on_top() {
-        driver.findElement(By.linkText("Register")).click();
-    }
-    @Then("user should be navigated to register page")
-    public void user_should_be_navigated_to_register_page() {
-        String registerPageTitle = driver.getTitle();
-        Assert.assertTrue("Register page title is not correct", registerPageTitle.equals("nopCommerce demo store. Register"));
-    }
-    @Then("user selects gender male")
-    public void user_selects_gender_male() {
-        driver.findElement(By.id("gender-male")).click();
-    }
-    @Then("user enters {string} for firstname input")
-    public void user_enters_for_firstname_input(String firstname) {
-       driver.findElement(By.id("FirstName")).sendKeys(firstname);
-    }
-    @Then("user enters {string} for lastname input")
-    public void user_enters_for_lastname_input(String lastname) {
-        driver.findElement(By.id("LastName")).sendKeys(lastname);
-    }
-    @Then("user selects {string} for day, {string} for month and {string} for year")
-    public void user_selects_for_day_for_month_and_for_year(String day, String month, String year) {
-        Select selectDay = new Select(driver.findElement(By.name("DateOfBirthDay")));
-        selectDay.selectByValue(day);
 
-        Select selectMonth = new Select(driver.findElement(By.name("DateOfBirthMonth")));
-        selectMonth.selectByVisibleText(month);
-
-        Select selectYear = new Select(driver.findElement(By.name("DateOfBirthYear")));
-        selectYear.selectByValue(year);
-
-    }
-    @Then("user enters {string} in email input")
-    public void user_enters(String email) {
-        int indexOfAt = email.indexOf("@");
-        this.username = email.substring(0 , indexOfAt) + randomUserId + email.substring(indexOfAt);
-        driver.findElement(By.id("Email")).sendKeys(username);
-    }
-    @Then("user enters {string} for company name input")
-    public void user_enters_for_company_name_input(String companyName) {
-       driver.findElement(By.id("Company")).sendKeys(companyName);
-    }
-    @Then("user unselects newsletter radio box")
-    public void user_unselects_newsletter_radio_box() {
-        WebElement newsletter = driver.findElement(By.id("Newsletter"));
-        if (newsletter.isSelected()){
-            newsletter.click();
-        }
-    }
-    @Then("user enters {string} for password input")
-    public void user_enters_for_password_input(String password) {
-        driver.findElement(By.id("Password")).sendKeys(password);
-        this.password = password;
-    }
-    @Then("user confirms {string} for confirm password input")
-    public void user_confirms_for_confirm_password_input(String password) {
-        driver.findElement(By.id("ConfirmPassword")).sendKeys(password);
-    }
-    @When("user clicks on register button")
-    public void user_clicks_on_register_button() {
-        driver.findElement(By.id("register-button")).click();
-    }
-    @Then("user should see {string} success message")
-    public void user_should_see_success_message(String registerSuccessMsg) {
-       Assert.assertTrue("Register success is not correct", driver.findElement(By.className("result")).getText().trim().equals(registerSuccessMsg));
-    }
-    @When("user clicks on continue button")
-    public void user_clicks_on_continue_button() {
-        driver.findElement(By.linkText("CONTINUE")).click();
-    }
-    @When("user clicks on login link")
-    public void user_clicks_on_login_link() {
-        driver.findElement(By.linkText("Log in")).click();
-    }
-    @Then("user is on the login page")
-    public void user_is_on_the_login_page() {
-        String homePageTitle = driver.getTitle();
-        Assert.assertTrue("Login page title is not correct", homePageTitle.equals("nopCommerce demo store. Login"));
-    }
-    @Then("user enters valid username and password as login credentials")
-    public void user_enters_and_as_login_credentials() {
-
-        driver.findElement(By.id("Email")).sendKeys(this.username);
-        driver.findElement(By.id("Password")).sendKeys(this.password);
-    }
-    @When("user clicks on the login button")
-    public void user_clicks_on_the_login_button() {
-        driver.findElement(By.xpath("//button[contains(@class, 'login-button')]")).click();
-    }
-    @Then("user can see my account link")
-    public void user_can_see_my_account_link() {
-        Assert.assertTrue("My Account link is not displayed", driver.findElement(By.linkText("My account")).isDisplayed());
-
-    }
 
 }
