@@ -1,5 +1,7 @@
 package com.academy.techcenture.step_definitions;
 
+import com.academy.techcenture.config.ConfigReader;
+import com.academy.techcenture.driver.Driver;
 import com.academy.techcenture.pages.HomePage;
 import com.academy.techcenture.pages.LoginPage;
 import com.academy.techcenture.pages.RegisterPage;
@@ -7,15 +9,11 @@ import com.academy.techcenture.utils.CommonUtils;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import java.time.Duration;
 
 public class NopCommerceRegisterStepDefinitions {
 
-    private WebDriver driver;
+    private static WebDriver driver;
     private int randomUserId = CommonUtils.generateId();
     private String username;
     private String password;
@@ -26,13 +24,8 @@ public class NopCommerceRegisterStepDefinitions {
 
     @Before
     public void beforeScenario(){
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
-        driver.get("https://demo.nopcommerce.com/");
-
+        driver = Driver.getDriver();
+        driver.get(ConfigReader.getProperty("url"));
         homePage = new HomePage(driver);
         registerPage = new RegisterPage(driver);
         loginPage = new LoginPage(driver);
@@ -144,13 +137,10 @@ public class NopCommerceRegisterStepDefinitions {
         homePage.clickLogoutLink();
     }
 
-
     @After
     public void afterScenario(){
-        if (driver != null){
-            driver.quit();
-            driver = null;
-        }
+       Driver.quitDriver();
+       driver = null;
     }
 
 }
