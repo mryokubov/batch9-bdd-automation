@@ -99,6 +99,8 @@ public class NopCommerceRegisterStepDefinitions {
     public void user_enters_valid_username_and_password_as_login_credentials() {
         loginPage.enterEmail(this.username);
         loginPage.enterPassword(this.password);
+        System.out.println(this.username);
+        System.out.println(this.password);
     }
 
     @And("user selects {string} on remember me radio box")
@@ -124,4 +126,9 @@ public class NopCommerceRegisterStepDefinitions {
         homePage.clickLogoutLink();
     }
 
+    @And("user enters valid {string} and {string} as login credentials")
+    public void userEntersValidAndAsLoginCredentials(String username, String password) {
+        loginPage.enterEmail(username);
+        loginPage.enterPassword(password);
+    }
 }
