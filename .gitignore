@@ -1,1 +1,4 @@
 target
+.idea
+batch9-bdd-automation.iml
+src/main/resources/config.properties

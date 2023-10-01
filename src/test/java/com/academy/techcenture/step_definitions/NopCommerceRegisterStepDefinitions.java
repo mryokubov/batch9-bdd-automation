@@ -1,6 +1,5 @@
 package com.academy.techcenture.step_definitions;
 
-import com.academy.techcenture.config.ConfigReader;
 import com.academy.techcenture.driver.Driver;
 import com.academy.techcenture.pages.HomePage;
 import com.academy.techcenture.pages.LoginPage;
