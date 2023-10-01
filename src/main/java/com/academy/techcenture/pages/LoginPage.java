@@ -27,6 +27,9 @@ public class LoginPage extends HomePage {
     @FindBy(xpath = "//button[contains(@class, 'login-button')]")
     protected WebElement loginBtn;
 
+    @FindBy(xpath = "//div[contains(@class,'validation-summary-errors')]")
+    protected WebElement loginErrorMsg;
+
     public void verifyPageTitle(){
         String homePageTitle = driver.getTitle();
         Assert.assertTrue("Login page title is not correct", homePageTitle.equals("nopCommerce demo store. Login"));
@@ -56,6 +59,10 @@ public class LoginPage extends HomePage {
 
     public void clickLoginBtn(){
         loginBtn.click();
+    }
+
+    public void verifyLoginError() {
+        Assert.assertTrue("Login Error Message was not displayed",loginErrorMsg.isDisplayed());
     }
 }
 

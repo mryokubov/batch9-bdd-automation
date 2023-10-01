@@ -130,4 +130,9 @@ public class NopCommerceRegisterStepDefinitions {
         loginPage.enterEmail(username);
         loginPage.enterPassword(password);
     }
+
+    @Then("user should see a login error message")
+    public void userShouldSeeALoginErrorMessage() {
+        loginPage.verifyLoginError();
+    }
 }

@@ -1,4 +1,6 @@
+@regression
 Feature: NopCommerce Login Feature
+  @smoke
   Scenario: NopCommerce User Login Scenario One User
     Given user is on the homepage
     When user clicks on login link
@@ -27,3 +29,13 @@ Feature: NopCommerce Login Feature
     |sarah.peterson11232@yahoo.com | Kev-17Lee | un-check   |
     |lilly.peterson24144@yahoo.com | Kev-17Lee | check      |
     |kevin.lee29510@techcenture.com | Kev-17Lee| un-check   |
+
+    @smoke
+  Scenario: NopCommerce User Login Scenario Negative
+    Given user is on the homepage
+    When user clicks on login link
+    Then user is on the login page
+    And user enters valid "kevin.lee29510@techcenture.com" and "Kev-17Lee" as login credentials
+    And user selects "check" on remember me radio box
+    When user clicks on the login button
+    Then user should see a login error message

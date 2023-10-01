@@ -1,3 +1,4 @@
+@regression
 Feature: NopCommerce Register Feature
   Scenario Outline: NopCommerce Register User Scenario
     Given user is on the homepage
@@ -30,4 +31,8 @@ Feature: NopCommerce Register Feature
     | male   | Kevin       | Lee      | 17        | January     | 1998       |kevin.lee@techcenture.com  | Techcenture Academy | check      | Kev-17Lee| Kev-17Lee       | Your registration completed | check      |
     | female | Sarah       | Peterson | 19        | March       | 1956       |sarah.peterson@yahoo.com   | Freddie Mac         | un-check   | Kev-17Lee| Kev-17Lee       | Your registration completed | un-check   |
     | male   | James       | Lee      | 17        | January     | 1998       |james.lee@techcenture.com  | Techcenture Academy | check      | Kev-17Lee| Kev-17Lee       | Your registration completed | check      |
+
+    @smoke
+    Examples:
+    |gender  | firstname   | lastname | birth_day | birth_month | birth_year | email                     | company_name        | newsletter | password | confirm_password| register_success_msg        | remember_me|
     | female | Lilly       | Peterson | 19        | March       | 1956       |lilly.peterson@yahoo.com   | Freddie Mac         | un-check   | Kev-17Lee| Kev-17Lee       | Your registration completed | un-check   |
